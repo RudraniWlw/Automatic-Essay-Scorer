@@ -30,13 +30,13 @@ def index():
             score_10 = max(1, min(10, score_10))
             
             if score_10 >= 8: 
-                quality = "🌟 HIGH QUALITY"
+                quality = " HIGH QUALITY"
                 color = "#2d6a4f"
             elif score_10 >= 5: 
-                quality = "📘 MEDIUM QUALITY"
+                quality = " MEDIUM QUALITY"
                 color = "#b9770e"
             else: 
-                quality = "📕 LOW QUALITY"
+                quality = " LOW QUALITY"
                 color = "#a4332a"
             
             bar_width = (score_10 / 10) * 100
