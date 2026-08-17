@@ -1,4 +1,4 @@
-# ==================== DAY 2: ESSAY SCORING MODEL (FIXED) ====================
+
 import pandas as pd
 import numpy as np
 import re
@@ -17,27 +17,26 @@ try:
 except:
     stop_words = set()
 
-print("🚀 DAY 2: Building the Essay Scoring Model")
-print("=" * 60)
 
-# ========== 1. LOAD DATA ==========
+
+# LOAD DATA 
 def load_dataset(filename):
     encodings = ['utf-8', 'latin-1', 'cp1252', 'ISO-8859-1']
     for encoding in encodings:
         try:
-            print(f"📖 Loading with {encoding}...")
+            print(f" Loading with {encoding}...")
             df = pd.read_csv(filename, sep='\t', encoding=encoding)
-            print(f"✅ Loaded successfully!")
+            print(f" Loaded successfully!")
             return df
         except:
             continue
-    raise Exception("❌ Could not load file!")
+    raise Exception(" Could not load file!")
 
 df = load_dataset('training_set_rel3.tsv')
 
 # Use 1000 essays
 df = df.head(1000)
-print(f"📊 Using {len(df)} essays for training")
+print(f" Using {len(df)} essays for training")
 
 # Clean function
 def clean_essay(text):
@@ -50,16 +49,16 @@ def clean_essay(text):
 
 df['cleaned_essay'] = df['essay'].apply(clean_essay)
 
-# ========== 2. PREPARE FEATURES AND TARGET ==========
-print("\n🔄 Preparing features...")
+#  PREPARE FEATURES AND TARGET 
+print("\n Preparing features...")
 X = df['cleaned_essay']
 y = df['domain1_score']
 
-print(f"📝 Number of essays: {len(X)}")
-print(f"🎯 Score range: {y.min()} to {y.max()}")
+print(f" Number of essays: {len(X)}")
+print(f" Score range: {y.min()} to {y.max()}")
 
-# ========== 3. CONVERT TEXT TO NUMBERS (TF-IDF) ==========
-print("\n🔢 Converting text to numbers (TF-IDF)...")
+# CONVERT TEXT TO NUMBERS (TF-IDF) 
+print("\n Converting text to numbers (TF-IDF)...")
 
 vectorizer = TfidfVectorizer(
     max_features=5000,
@@ -69,43 +68,43 @@ vectorizer = TfidfVectorizer(
 )
 
 X_features = vectorizer.fit_transform(X)
-print(f"✅ Created {X_features.shape[1]} numerical features from words")
-print(f"📊 Feature matrix size: {X_features.shape}")
+print(f" Created {X_features.shape[1]} numerical features from words")
+print(f" Feature matrix size: {X_features.shape}")
 
-# ========== 4. SPLIT DATA ==========
-print("\n📊 Splitting data...")
+#  SPLIT DATA 
+print("\n Splitting data...")
 
 X_train, X_test, y_train, y_test = train_test_split(
     X_features, y, test_size=0.20, random_state=42
 )
 
 # FIXED: Use .shape[0] for sparse matrices
-print(f"📚 Training set: {X_train.shape[0]} essays")
-print(f"🧪 Testing set: {X_test.shape[0]} essays")
+print(f" Training set: {X_train.shape[0]} essays")
+print(f" Testing set: {X_test.shape[0]} essays")
 
-# ========== 5. TRAIN THE MODEL ==========
-print("\n🤖 Training the scoring model...")
+#  TRAIN THE MODEL 
+print("\n Training the scoring model...")
 
 model = LinearRegression()
 model.fit(X_train, y_train)
 
-print("✅ Model training complete!")
+print(" Model training complete!")
 
-# ========== 6. TEST THE MODEL ==========
-print("\n🧪 Testing predictions...")
+# TEST THE MODEL 
+print("\n Testing predictions...")
 
 y_pred = model.predict(X_test)
 
 mse = mean_squared_error(y_test, y_pred)
 r2 = r2_score(y_test, y_pred)
 
-print(f"📊 Model Performance:")
+print(f" Model Performance:")
 print(f"  • Mean Squared Error: {mse:.3f}")
 print(f"  • R² Score: {r2:.3f}")
 print(f"  • (R² of 1.0 = perfect, 0.0 = random guessing)")
 
-# ========== 7. SHOW SAMPLE PREDICTIONS ==========
-print("\n📝 Sample Predictions (First 5 test essays):")
+#  SHOW SAMPLE PREDICTIONS 
+print("\n Sample Predictions (First 5 test essays):")
 print("-" * 60)
 for i in range(5):
     actual = y_test.iloc[i]
@@ -117,8 +116,8 @@ for i in range(5):
     print(f"  Difference: {difference:.1f}")
     print()
 
-# ========== 8. IMPORTANT WORDS ==========
-print("\n🔍 Top 10 Most Important Words for Scoring:")
+#  IMPORTANT WORDS 
+print("\n Top 10 Most Important Words for Scoring:")
 print("-" * 60)
 
 feature_names = vectorizer.get_feature_names_out()
@@ -140,8 +139,8 @@ for word, coef in important_words[-5:]:
     if coef < 0:
         print(f"  {coef:.3f}: '{word}'")
 
-# ========== 9. SAVE MODEL ==========
-print("\n💾 Saving model...")
+#  SAVE MODEL 
+print("\n Saving model...")
 
 with open('essay_scorer_model.pkl', 'wb') as f:
     pickle.dump(model, f)
@@ -149,11 +148,11 @@ with open('essay_scorer_model.pkl', 'wb') as f:
 with open('vectorizer.pkl', 'wb') as f:
     pickle.dump(vectorizer, f)
 
-print("✅ Model saved as 'essay_scorer_model.pkl'")
-print("✅ Vectorizer saved as 'vectorizer.pkl'")
+print(" Model saved as 'essay_scorer_model.pkl'")
+print(" Vectorizer saved as 'vectorizer.pkl'")
 
-# ========== 10. TEST WITH YOUR OWN ESSAY ==========
-print("\n✍️ SCORE YOUR OWN ESSAY:")
+#  TEST WITH YOUR OWN ESSAY 
+print("\n SCORE YOUR OWN ESSAY:")
 print("-" * 60)
 
 def score_essay(essay_text):
@@ -170,9 +169,9 @@ However, this also creates challenges in maintaining focus and academic integrit
 """
 
 predicted_score = score_essay(test_essay)
-print(f"📝 Test Essay:")
+print(f" Test Essay:")
 print(f"{test_essay}")
-print(f"\n🎯 Predicted Score: {predicted_score:.1f} out of 12")
+print(f"\n Predicted Score: {predicted_score:.1f} out of 12")
 
 # Score range interpretation
 if predicted_score > 8:
