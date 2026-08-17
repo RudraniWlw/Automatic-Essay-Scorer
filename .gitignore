@@ -1,0 +1,15 @@
+# Python cache
+__pycache__/
+*.pyc
+
+# Virtual environment
+venv/
+.env
+
+# Project-specific (so we don't upload the trained model)
+essay_scorer_model.pkl
+vectorizer.pkl
+
+# IDE settings
+.vscode/
+.idea/
