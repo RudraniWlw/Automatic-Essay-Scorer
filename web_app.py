@@ -1,4 +1,4 @@
-# ==================== DAY 3: WEB INTERFACE (NEWSPAPER THEME) ====================
+
 from flask import Flask, request, render_template_string
 import pickle
 import re
@@ -6,14 +6,14 @@ import pandas as pd
 from datetime import datetime
 
 # Load the saved model
-print("🚀 Loading Essay Scorer Model...")
+print(" Loading Essay Scorer Model...")
 with open('essay_scorer_model.pkl', 'rb') as f:
     model = pickle.load(f)
 
 with open('vectorizer.pkl', 'rb') as f:
     vectorizer = pickle.load(f)
 
-print("✅ Model loaded successfully!")
+print(" Model loaded successfully!")
 
 # Initialize Flask app
 app = Flask(__name__)
@@ -503,10 +503,10 @@ def index():
     return render_template_string(HTML_TEMPLATE, result=result, essay_text=essay_text, date=current_date)
 
 if __name__ == '__main__':
-    print("\n📰 The Essay Times - Automated Scoring System")
+    print("\n The Essay Times - Automated Scoring System")
     print("=" * 50)
-    print("🌐 Server running at: http://127.0.0.1:5000")
-    print("📱 Open your browser and start scoring essays!")
-    print("🔄 Press CTRL+C to stop")
+    print(" Server running at: http://127.0.0.1:5000")
+    print(" Open your browser and start scoring essays!")
+    print(" Press CTRL+C to stop")
     print("=" * 50)
     app.run(debug=True, host='127.0.0.1', port=5000)
