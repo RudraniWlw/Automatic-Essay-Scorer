@@ -22,4 +22,3 @@ To build a system that can predict essay scores (1-12) with reasonable accuracy,
 - **Training Set**: 2,400 essays
 - **Testing Set**: 600 essays
 
-##  Architecture
