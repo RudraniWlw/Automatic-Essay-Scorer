@@ -18,7 +18,7 @@ To build a system that can predict essay scores (1-12) with reasonable accuracy,
 ##  Dataset
 - **Source**: ASAP (Automated Student Assessment Prize)
 - **Size**: 12,976 essays
-- **Scores Range**: 1-12
+- **Scores Range**: 1-10
 - **Training Set**: 2,400 essays
 - **Testing Set**: 600 essays
 
